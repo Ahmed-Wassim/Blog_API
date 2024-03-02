@@ -7,60 +7,123 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## About Laravel
+# API Documentation
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+This document provides an overview of the endpoints available in the application's API.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Authentication
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### POST /api/auth/login
+- Logs in a user.
+- Requires `email` and `password` fields in the request body.
+- Returns an access token upon successful login.
 
-## Learning Laravel
+### POST /api/auth/register
+- Registers a new user.
+- Requires `name`, `email`, and `password` fields in the request body.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### POST /api/auth/logout
+- Logs out the authenticated user.
+- Requires a valid access token in the request headers.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### POST /api/auth/refresh
+- Refreshes the user's access token.
+- Requires a valid refresh token in the request body.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Categories
 
-## Laravel Sponsors
+### GET /api/categories
+- Retrieves a list of all categories.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### POST /api/categories
+- Creates a new category.
+- Requires `name` and `slug` fields in the request body.
+- Requires authentication.
 
-### Premium Partners
+### GET /api/categories/{category:slug}
+- Retrieves details of a specific category by slug.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### PUT /api/categories/{category:slug}
+- Updates an existing category.
+- Requires `name` and `slug` fields in the request body.
+- Requires authentication.
 
-## Contributing
+### DELETE /api/categories/{category:slug}
+- Deletes a category by slug.
+- Requires authentication.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Tags
 
-## Code of Conduct
+### GET /api/tags
+- Retrieves a list of all tags.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### POST /api/tags
+- Creates a new tag.
+- Requires `name` and `slug` fields in the request body.
+- Requires authentication.
 
-## Security Vulnerabilities
+### GET /api/tags/{tag:slug}
+- Retrieves details of a specific tag by slug.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### PUT /api/tags/{tag:slug}
+- Updates an existing tag.
+- Requires `name` and `slug` fields in the request body.
+- Requires authentication.
 
-## License
+### DELETE /api/tags/{tag:slug}
+- Deletes a tag by slug.
+- Requires authentication.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Posts
+
+### GET /api/posts
+- Retrieves a list of all posts.
+
+### POST /api/posts
+- Creates a new post.
+- Requires various fields in the request body.
+- Requires authentication.
+
+### GET /api/posts/{post:slug}
+- Retrieves details of a specific post by slug.
+
+### PUT /api/posts/{post:slug}
+- Updates an existing post.
+- Requires various fields in the request body.
+- Requires authentication.
+
+### POST /api/posts/{post:slug}/archive
+- Archives a post.
+- Requires authentication.
+
+### DELETE /api/posts/{post:slug}
+- Deletes a post by slug.
+- Requires authentication.
+
+### PATCH /api/posts/{post:slug}/restore
+- Restores a previously archived post.
+- Requires authentication.
+
+### GET /api/posts/archived
+- Retrieves a list of archived posts.
+- Requires authentication.
+
+## Comments
+
+### POST /api/post/{post:slug}/comments
+- Adds a comment to a post.
+- Requires authentication.
+
+### DELETE /api/post/{post:slug}/comments
+- Deletes a comment from a post.
+- Requires authentication.
+
+## Followers
+
+### POST /api/followers/{user:username}
+- Follows a user by username.
+- Requires authentication.
+
+### DELETE /api/followers/{user:username}
+- Unfollows a user by username.
+- Requires authentication.
