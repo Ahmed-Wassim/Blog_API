@@ -2,10 +2,12 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\PostController;
 use App\Http\Controllers\TagController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\FollowerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -65,4 +67,12 @@ Route::controller(PostController::class)->group(function () {
         Route::patch('posts/{post:slug}/restore', 'restore');
         Route::get('posts/archived', 'Archived');
     });
+});
+
+Route::post('post/{post:slug}/comments', [CommentController::class, 'store'])->middleware('auth:api');
+Route::delete('post/{post:slug}/comments', [CommentController::class, 'destroy'])->middleware('auth:api');
+
+Route::controller(FollowerController::class)->middleware('auth:api')->group(function () {
+    Route::post('followers/{user:username}', 'follow');
+    Route::delete('followers/{user:username}', 'unfollow');
 });

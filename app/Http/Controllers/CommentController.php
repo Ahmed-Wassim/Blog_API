@@ -20,4 +20,11 @@ class CommentController extends Controller
 
         return $this->sendSuccess($post->comments, 201);
     }
+
+    public function destroy(Post $post, $comment)
+    {
+        $comment = $post->comments()->find($comment);
+        $comment->delete();
+        return $this->sendSuccess($comment, 200);
+    }
 }

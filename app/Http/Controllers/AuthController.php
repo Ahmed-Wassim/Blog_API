@@ -84,15 +84,7 @@ class AuthController extends Controller
     {
         return $this->createNewToken(auth()->refresh());
     }
-    /**
-     * Get the authenticated User.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function userProfile()
-    {
-        return response()->json(auth()->user());
-    }
+
     /**
      * Get the token array structure.
      *
